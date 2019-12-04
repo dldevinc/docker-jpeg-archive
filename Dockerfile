@@ -12,17 +12,18 @@ RUN apk --update add \
 WORKDIR /src
 ADD https://ftp.gnu.org/gnu/parallel/parallel-${GNU_PARALLEL_VERSION}.tar.bz2 ./
 RUN tar -xf parallel-${GNU_PARALLEL_VERSION}.tar.bz2
-
-WORKDIR /src/parallel-${GNU_PARALLEL_VERSION}
-RUN autoreconf -fiv && ./configure && make && make install prefix=/opt/parallel
+RUN cd /src/parallel-${GNU_PARALLEL_VERSION} && \
+	autoreconf -fiv && \
+	./configure && \
+	make && \
+	make install prefix=/opt/parallel
 
 # JPEG Archive
-WORKDIR /src
 ADD https://github.com/danielgtaylor/jpeg-archive/archive/v${VERSION}.tar.gz ./
 RUN tar -xzf v${VERSION}.tar.gz
-
-WORKDIR /src/jpeg-archive-${VERSION}
-RUN make && make install PREFIX=/opt/jpeg-archive
+RUN cd /src/jpeg-archive-${VERSION} && \
+	make && \
+	make install PREFIX=/opt/jpeg-archive
 
 
 FROM alpine:3.7
