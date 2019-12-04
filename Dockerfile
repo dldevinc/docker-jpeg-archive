@@ -26,8 +26,8 @@ RUN make && make install PREFIX=/opt/jpeg-archive
 
 
 FROM alpine:3.7
-COPY --from=builder /opt/jpeg-archive /opt/jpeg-archive
 COPY --from=builder /opt/parallel /opt/parallel
+COPY --from=builder /opt/jpeg-archive /opt/jpeg-archive
 
 ENV PATH=${PATH}:/opt/parallel/bin:/opt/jpeg-archive/bin
 CMD jpeg-recompress
